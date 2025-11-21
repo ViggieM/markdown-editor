@@ -13,5 +13,54 @@
  */
 
 @theme {
-  /* Add custom theme variables here as needed */
+  /* ===== Color Palette ===== */
+  /* Grayscale - 10 shade system */
+  --color-gray-100: #ffffff;
+  --color-gray-200: #f5f5f5;
+  --color-gray-300: #e4e4e4;
+  --color-gray-400: #c1c4cb;
+  --color-gray-500: #7c8187;
+  --color-gray-600: #5a6069;
+  --color-gray-700: #35393f;
+  --color-gray-800: #2b2d31;
+  --color-gray-900: #1d1f22;
+  --color-gray-1000: #151619;
+
+  /* Accent colors */
+  --color-orange: #e46643;
+  --color-orange-hover: #f39765;
+
+  /* ===== Typography ===== */
+  /* Font families */
+  --font-slab: 'Roboto Slab', serif;
+  --font-sans: 'Roboto', sans-serif;
+  --font-mono: 'Roboto Mono', monospace;
+  --font-commissioner: 'Commissioner', sans-serif;
+
+  /* Font sizes */
+  --font-size-xs: 13px;
+  --font-size-sm: 14px;
+  --font-size-base: 15px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 32px;
+
+  /* Line heights */
+  --line-height-tight: 100%;
+  --line-height-normal: 24px;
+
+  /* Letter spacing */
+  --letter-spacing-wide: 2px;
+  --letter-spacing-wider: 5px;
+
+  /* Font weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* ===== Spacing & Layout ===== */
+  --radius: 4px;
 }

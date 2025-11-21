@@ -18,3 +18,8 @@
  * @import './card.css';
  * @import './modal.css';
  */
+
+/* Design system components */
+@import './button.css';
+@import './toggle.css';
+@import './file-rename.css';

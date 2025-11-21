@@ -7,6 +7,19 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@fontsource/commissioner':
+        specifier: ^5.2.10
+        version: 5.2.10
+      '@fontsource/roboto':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/roboto-mono':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/roboto-slab':
+        specifier: ^5.2.8
+        version: 5.2.8
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^4.1.3
@@ -318,6 +331,18 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fontsource/commissioner@5.2.10':
+    resolution: {integrity: sha512-uTAG+RagjgQ9XBlpmG0kaQjJRt725ptlErXdUwVDNOki4qRjb9VsFcS6yP7RPIOxdREKEAONxh1q8O7rlh60xQ==}
+
+  '@fontsource/roboto-mono@5.2.8':
+    resolution: {integrity: sha512-M0XPRcvkOKiTPooXwX7yJSNpuad3CPcQwsADBfnopz3apBs+VKI47pc42mlvAxJjNTRauu5rndSxHc8F52bR7Q==}
+
+  '@fontsource/roboto-slab@5.2.8':
+    resolution: {integrity: sha512-8+iMCsoUZsDwQUe5omwCp7JPNTVdyAgay5AdhmnFZPEVIVabujrmYaFkSuZ1+GUemPEWlzEQ6aQkg2mPL84SAA==}
+
+  '@fontsource/roboto@5.2.8':
+    resolution: {integrity: sha512-oh9g4Cg3loVMz9MWeKWfDI+ooxxG1aRVetkiKIb2ESS2rrryGecQ/y4pAj4z5A5ebyw450dYRi/c4k/I3UBhHA==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1996,6 +2021,14 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fontsource/commissioner@5.2.10': {}
+
+  '@fontsource/roboto-mono@5.2.8': {}
+
+  '@fontsource/roboto-slab@5.2.8': {}
+
+  '@fontsource/roboto@5.2.8': {}
 
   '@humanfs/core@0.19.1': {}
 

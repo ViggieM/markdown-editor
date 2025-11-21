@@ -32,3 +32,38 @@
 .prose > *:first-child {
   @apply mt-0;
 }
+
+/* ===== Design System Typography Utilities ===== */
+
+/* Heading styles from Figma design */
+.heading-m {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-tight);
+}
+
+.heading-s {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+}
+
+.body-m {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-tight);
+}
+
+/* Markdown label style */
+.label-markdown {
+  font-family: var(--font-commissioner);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+}

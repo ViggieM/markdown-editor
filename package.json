@@ -46,5 +46,11 @@
     "typescript-eslint": "^8.47.0",
     "vite": "^7.2.2",
     "vite-plugin-devtools-json": "^1.0.0"
+  },
+  "dependencies": {
+    "@fontsource/commissioner": "^5.2.10",
+    "@fontsource/roboto": "^5.2.8",
+    "@fontsource/roboto-mono": "^5.2.8",
+    "@fontsource/roboto-slab": "^5.2.8"
   }
 }

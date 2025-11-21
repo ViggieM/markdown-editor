@@ -10,66 +10,91 @@ html {
 }
 
 body {
-  @apply bg-white text-gray-900;
+  font-family: var(--font-sans);
+  @apply bg-gray-100 text-gray-1000;
 }
 
 /* Headings - using margin-top for spacing */
+/* Design system: Roboto Slab for markdown preview headings */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  @apply font-bold;
+  font-family: var(--font-slab);
+  line-height: var(--line-height-tight);
 }
 
 h1 {
-  @apply text-4xl;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
 }
 
 h2 {
-  @apply text-3xl mt-8;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-light);
+  @apply mt-8;
 }
 
 h3 {
-  @apply text-2xl mt-6;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  @apply mt-6;
 }
 
 h4 {
-  @apply text-xl mt-6;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  @apply mt-6;
 }
 
 h5 {
-  @apply text-lg mt-4;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  @apply mt-4;
 }
 
 h6 {
-  @apply text-base mt-4;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  @apply mt-4 text-orange;
 }
 
 /* Paragraphs - using margin-top */
 p {
+  font-family: var(--font-slab);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
   @apply mt-4;
 }
 
 /* Lists - using margin-top */
 ul,
 ol {
+  font-family: var(--font-slab);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
   @apply mt-4;
 }
 
 /* Links */
 a {
-  @apply text-blue-600 hover:text-blue-800;
+  @apply text-orange hover:text-orange-hover;
 }
 
 /* Code blocks */
 code {
-  @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  @apply bg-gray-800 text-gray-100 px-1 py-0.5 rounded;
 }
 
 pre {
-  @apply bg-gray-100 p-4 rounded mt-4 overflow-x-auto;
+  font-family: var(--font-mono);
+  @apply bg-gray-800 text-gray-100 p-4 rounded mt-4 overflow-x-auto;
 }
 
 pre code {
