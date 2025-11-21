@@ -1,0 +1,77 @@
+/**
+ * Base Element Styles
+ *
+ * Default styles for HTML elements.
+ * IMPORTANT: Always prefer margin-top over margin-bottom
+ */
+
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply bg-white text-gray-900;
+}
+
+/* Headings - using margin-top for spacing */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
+}
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-3xl mt-8;
+}
+
+h3 {
+  @apply text-2xl mt-6;
+}
+
+h4 {
+  @apply text-xl mt-6;
+}
+
+h5 {
+  @apply text-lg mt-4;
+}
+
+h6 {
+  @apply text-base mt-4;
+}
+
+/* Paragraphs - using margin-top */
+p {
+  @apply mt-4;
+}
+
+/* Lists - using margin-top */
+ul,
+ol {
+  @apply mt-4;
+}
+
+/* Links */
+a {
+  @apply text-blue-600 hover:text-blue-800;
+}
+
+/* Code blocks */
+code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
+}
+
+pre {
+  @apply bg-gray-100 p-4 rounded mt-4 overflow-x-auto;
+}
+
+pre code {
+  @apply bg-transparent p-0;
+}

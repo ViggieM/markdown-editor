@@ -1,0 +1,20 @@
+/**
+ * Component Styles (Media Objects)
+ *
+ * This file imports all component-specific styles.
+ * Components are reusable "media objects" with class-based styling.
+ *
+ * Example structure:
+ * .card {
+ *   header {
+ *     @apply text-xl;
+ *   }
+ *   footer {
+ *     @apply text-sm;
+ *   }
+ * }
+ *
+ * Import component files here as you create them:
+ * @import './card.css';
+ * @import './modal.css';
+ */

@@ -1,0 +1,17 @@
+/**
+ * Theme Configuration
+ *
+ * Define custom Tailwind CSS variables here.
+ * Using Tailwind v4 CSS-based configuration.
+ *
+ * Example customizations:
+ * @theme {
+ *   --color-primary: #3b82f6;
+ *   --color-secondary: #8b5cf6;
+ *   --font-sans: 'Inter', system-ui, sans-serif;
+ * }
+ */
+
+@theme {
+  /* Add custom theme variables here as needed */
+}

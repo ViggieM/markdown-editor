@@ -1,0 +1,25 @@
+/**
+ * Global Styles Entry Point
+ *
+ * This file imports all style layers in the correct order:
+ * 1. TailwindCSS core
+ * 2. Theme configuration
+ * 3. Base element styles
+ * 4. Component styles
+ * 5. Utility classes
+ */
+
+/* Import TailwindCSS */
+@import 'tailwindcss';
+
+/* Import theme configuration */
+@import './theme.css';
+
+/* Import base element styles */
+@import './base.css';
+
+/* Import component styles */
+@import './components/index.css';
+
+/* Import utility classes */
+@import './utilities.css';
