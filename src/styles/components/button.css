@@ -7,8 +7,8 @@
 /* Base button class with common properties */
 .btn {
 	/* Layout */
-	@apply inline-flex items-center justify-center gap-2;
-	@apply px-6 py-3;
+	@apply inline-flex items-center justify-center gap-2 shrink-0;
+	@apply px-10 py-2;
 
 	/* Border and shape */
 	@apply border-none rounded-[var(--radius)];
@@ -35,7 +35,6 @@
 
 	/* Primary variant - orange background */
 	&.btn-primary {
-		@apply px-10 py-2;
 		color: var(--color-gray-100);
 		background-color: var(--color-orange);
 
@@ -64,7 +63,7 @@
 
 	/* Small size variant */
 	&.btn-sm {
-		@apply px-4 py-2;
+		@apply p-3 sm:py-2;
 		font-size: var(--font-size-sm);
 	}
 }
