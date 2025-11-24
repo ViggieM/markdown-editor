@@ -23,7 +23,7 @@
 
 	const variantClass = $derived(variant === 'ghost' ? 'btn-ghost' : 'btn-primary');
 	const sizeClass = $derived(size === 'small' ? 'btn-sm' : '');
-	const buttonClass = $derived(`${variantClass} ${sizeClass}`.trim());
+	const buttonClass = $derived(`btn ${variantClass} ${sizeClass}`.trim());
 </script>
 
 <button {type} {disabled} {onclick} class={buttonClass} {...rest}>

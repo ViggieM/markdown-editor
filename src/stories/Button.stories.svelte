@@ -27,16 +27,16 @@
 </script>
 
 <!-- More on writing stories with args: https://storybook.js.org/docs/writing-stories/args -->
-<Story name="Primary" args={{ variant: 'primary' }}>Button</Story>
+<Story name="Primary" args={{ variant: 'primary' }}>New Document</Story>
 
-<Story name="Ghost" args={{ variant: 'ghost' }}>Button</Story>
+<Story name="Ghost" args={{ variant: 'ghost' }}>New Document</Story>
 
-<Story name="Small" args={{ size: 'small', variant: 'primary' }}>Button</Story>
+<Story name="Small" args={{ size: 'small', variant: 'primary' }}>New Document</Story>
 
-<Story name="Small Ghost" args={{ size: 'small', variant: 'ghost' }}>Button</Story>
+<Story name="Small Ghost" args={{ size: 'small', variant: 'ghost' }}>New Document</Story>
 
-<Story name="Disabled" args={{ variant: 'primary', disabled: true }}>Button</Story>
+<Story name="Disabled" args={{ variant: 'primary', disabled: true }}>New Document</Story>
 
 <Story name="Button with Icon" args={{ variant: 'primary' }}>
-	<img src={saveIcon} />Button
+	<img src={saveIcon} />New Document
 </Story>

@@ -4,68 +4,67 @@
  * Design system button styles based on Figma mockup
  */
 
-/* Primary button with orange background */
-.btn-primary {
-	@apply inline-flex items-center justify-center gap-2;
-	@apply px-10 py-2;
-	@apply border-none rounded-[var(--radius)];
-	@apply cursor-pointer;
-	@apply transition-colors duration-200;
-	font-family: var(--font-sans);
-	font-size: var(--font-size-base);
-	font-weight: var(--font-weight-normal);
-	color: var(--color-gray-100);
-	background-color: var(--color-orange);
-}
-
-.btn-primary:hover {
-	background-color: var(--color-orange-hover);
-}
-
-.btn-primary:active {
-	background-color: var(--color-orange);
-}
-
-.btn-primary:disabled {
-	@apply opacity-50 cursor-not-allowed;
-}
-
-/* Ghost button with transparent background */
-.btn-ghost {
+/* Base button class with common properties */
+.btn {
+	/* Layout */
 	@apply inline-flex items-center justify-center gap-2;
 	@apply px-6 py-3;
+
+	/* Border and shape */
 	@apply border-none rounded-[var(--radius)];
+
+	/* Interaction */
 	@apply cursor-pointer;
 	@apply transition-colors duration-200;
+
+	/* Typography */
 	font-family: var(--font-sans);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-normal);
-	color: var(--color-orange);
-	background-color: transparent;
-}
 
-.btn-ghost:hover {
-	background-color: rgba(228, 102, 67, 0.1);
-}
+	/* Icon sizing */
+	& svg,
+	& img {
+		@apply w-4 h-4;
+	}
 
-.btn-ghost:active {
-	background-color: rgba(228, 102, 67, 0.2);
-}
+	/* Disabled state */
+	&:disabled {
+		@apply opacity-50 cursor-not-allowed;
+	}
 
-.btn-ghost:disabled {
-	@apply opacity-50 cursor-not-allowed;
-}
+	/* Primary variant - orange background */
+	&.btn-primary {
+		@apply px-10 py-2;
+		color: var(--color-gray-100);
+		background-color: var(--color-orange);
 
-/* Small button variant */
-.btn-sm {
-	@apply px-4 py-2;
-	font-size: var(--font-size-sm);
-}
+		&:hover {
+			background-color: var(--color-orange-hover);
+		}
 
-/* Icon sizing */
-.btn-primary svg,
-.btn-primary img,
-.btn-ghost svg,
-.btn-ghost img {
-	@apply w-4 h-4;
+		&:active {
+			background-color: var(--color-orange);
+		}
+	}
+
+	/* Ghost variant - transparent background */
+	&.btn-ghost {
+		color: var(--color-orange);
+		background-color: transparent;
+
+		&:hover {
+			background-color: rgba(228, 102, 67, 0.1);
+		}
+
+		&:active {
+			background-color: rgba(228, 102, 67, 0.2);
+		}
+	}
+
+	/* Small size variant */
+	&.btn-sm {
+		@apply px-4 py-2;
+		font-size: var(--font-size-sm);
+	}
 }
