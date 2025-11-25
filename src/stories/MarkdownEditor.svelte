@@ -5,9 +5,6 @@
 
 	let isMenuOpen = $state(true);
 	let sidebarWidth = $derived(isMenuOpen ? '250px' : '0px');
-	$effect(() => {
-		console.log(isMenuOpen ? 'menu opened' : 'menu closed');
-	});
 </script>
 
 <div class="markdown-editor" style="--sidebar-width: {sidebarWidth}">

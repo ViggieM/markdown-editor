@@ -24,7 +24,6 @@
 	}: Props = $props();
 
 	function handleMenuToggle() {
-		console.log('Menu toggled', isMenuOpen);
 		isMenuOpen = !isMenuOpen;
 		onMenuToggle?.();
 	}
@@ -46,7 +45,11 @@
 		</div>
 	</div>
 	<div class="header-right">
-		<button class="header-delete shrink-0" onclick={onDelete} aria-label="Delete document">
+		<button
+			class="header-delete btn btn-ghost btn-sm shrink-0"
+			onclick={onDelete}
+			aria-label="Delete document"
+		>
 			<img src={TrashIcon} alt="" />
 		</button>
 		<Button size="small" variant="primary" onclick={onSave} disabled={isSaveDisabled}>

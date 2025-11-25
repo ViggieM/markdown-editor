@@ -43,11 +43,11 @@
 	@reference '../../styles/global.css';
 
 	.hamburger-button {
-		@apply p-4 py-5;
+		@apply p-4 py-5 md:py-6 md:px-5;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--color-gray-800);
+		background: var(--color-gray-700);
 		border: none;
 		cursor: pointer;
 		transition: background-color 0.2s ease;
@@ -65,7 +65,7 @@
 
 	/* Icon container */
 	.hamburger-button__icon {
-		@apply h-[14px] w-[16px] md:h-[18px] md:w-[30px];
+		@apply h-[16px] w-[24px] md:h-[20px] md:w-[32px];
 		display: flex;
 		flex-direction: column;
 		gap: 4px;

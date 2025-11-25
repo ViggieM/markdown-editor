@@ -26,7 +26,7 @@
 
 /* Right section - action buttons area */
 .header-right {
-	@apply flex items-center gap-6;
+	@apply flex items-center gap-4;
 	padding-right: 1rem;
 	flex-shrink: 0;
 }
@@ -68,7 +68,7 @@
 
 /* Document name - with icon space */
 .header-doc-name {
-	@apply flex items-center gap-2;
+	@apply flex items-center gap-2 mr-2;
 	font-family: var(--font-sans);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-normal);
@@ -78,17 +78,17 @@
 
 /* Delete button - icon button with hover effect */
 .header-delete {
+	@apply p-4;
 	@apply inline-flex items-center justify-center;
 	@apply cursor-pointer;
 	@apply transition-colors duration-200;
 	background-color: transparent;
 	border: none;
-	padding: 0;
 	color: var(--color-gray-500);
 
 	& svg,
 	& img {
-		@apply w-6 h-6;
+		@apply size-4 md:size-6;
 	}
 
 	&:hover {
