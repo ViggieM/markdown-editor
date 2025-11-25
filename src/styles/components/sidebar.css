@@ -41,7 +41,7 @@
 }
 
 .sidebar__list {
-	@apply p-6;
+	@apply p-2;
 	list-style: none;
 	margin: 0 0 auto 0;
 	flex: 1;
