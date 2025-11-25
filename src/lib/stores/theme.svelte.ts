@@ -8,7 +8,7 @@
 import { browser } from '$app/environment';
 
 class ThemeState {
-	isDark = $state(false);
+	isDark = $state(true);
 
 	constructor() {
 		if (browser) {
