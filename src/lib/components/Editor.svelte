@@ -185,7 +185,6 @@
 
 <style>
 	div {
-		background-color: teal;
 		height: 100%;
 		overflow-y: auto;
 	}

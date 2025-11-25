@@ -83,3 +83,7 @@
 .sidebar__new-document:hover {
 	background: var(--color-orange-hover);
 }
+
+.sidebar__footer {
+	@apply p-4;
+}

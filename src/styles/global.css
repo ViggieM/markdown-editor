@@ -33,3 +33,6 @@
 
 /* Import utility classes */
 @import './utilities.css';
+
+/* Dark mode configuration - class-based toggling */
+@custom-variant dark (&:where(.dark, .dark *));

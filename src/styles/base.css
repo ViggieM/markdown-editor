@@ -11,7 +11,7 @@ html {
 
 body {
 	font-family: var(--font-sans);
-	@apply bg-gray-100 text-gray-1000;
+	@apply bg-gray-100 text-gray-1000 dark:bg-gray-1000 dark:text-gray-100;
 }
 
 /* Headings - using margin-top for spacing */
@@ -89,12 +89,12 @@ code {
 	font-family: var(--font-mono);
 	font-size: var(--font-size-sm);
 	line-height: var(--line-height-normal);
-	@apply bg-gray-800 text-gray-100 px-1 py-0.5 rounded;
+	@apply bg-gray-800 text-gray-100 dark:bg-gray-200 dark:text-gray-900 px-1 py-0.5 rounded;
 }
 
 pre {
 	font-family: var(--font-mono);
-	@apply bg-gray-800 text-gray-100 p-4 rounded mt-4 overflow-x-auto;
+	@apply bg-gray-800 text-gray-100 dark:bg-gray-200 dark:text-gray-900 p-4 rounded mt-4 overflow-x-auto;
 }
 
 pre code {

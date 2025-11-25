@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DocumentList from './DocumentList.svelte';
+	import DarkModeToggle from '$lib/components/DarkModeToggle.svelte';
 	import type { Document } from '$lib/types';
 
 	interface Props {
@@ -40,7 +41,11 @@
 		</header>
 
 		<div class="sidebar__list">
-			<DocumentList documents={exampleDocuments} onDocumentSelect={onDocumentSelect} />
+			<DocumentList documents={exampleDocuments} {onDocumentSelect} />
 		</div>
+
+		<footer class="sidebar__footer">
+			<DarkModeToggle />
+		</footer>
 	</nav>
 </aside>
