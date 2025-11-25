@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Sidebar from '$lib/components/Sidebar.svelte';
+	import HamburgerButton from '$lib/components/HamburgerButton.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import SaveIcon from '$lib/assets/save.svg';
 	import TrashIcon from '$lib/assets/trash.svg';
 	import FileIcon from '$lib/assets/file.svg';
 
 	interface Props {
+		isMenuOpen: boolean;
 		documentName?: string;
 		onSave?: () => void;
 		onDelete?: () => void;
@@ -14,17 +15,24 @@
 	}
 
 	let {
+		isMenuOpen = $bindable(),
 		documentName = 'welcome.md',
 		onSave,
 		onDelete,
 		onMenuToggle,
 		isSaveDisabled = false
 	}: Props = $props();
+
+	function handleMenuToggle() {
+		console.log('Menu toggled', isMenuOpen);
+		isMenuOpen = !isMenuOpen;
+		onMenuToggle?.();
+	}
 </script>
 
 <header class="header">
 	<div class="header-left">
-		<Sidebar onclick={onMenuToggle} />
+		<HamburgerButton isOpen={isMenuOpen} onclick={handleMenuToggle} />
 	</div>
 	<div class="header-center">
 		<span class="header-logo">MARKDOWN</span>
