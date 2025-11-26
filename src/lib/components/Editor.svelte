@@ -25,6 +25,15 @@
 		<div class="editor__column editor__column--markdown">
 			<div class="editor__header">
 				<h2 class="editor__title">Markdown</h2>
+				<button
+					class="editor__toggle md:hidden"
+					onclick={toggleMarkdown}
+					type="button"
+					aria-label={showMarkdown ? 'Hide markdown' : 'Show markdown'}
+				>
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					{@html showMarkdown ? eyeIcon : eyeOffIcon}
+				</button>
 			</div>
 			<textarea class="editor__textarea" bind:value={markdown} placeholder="Enter markdown here..."
 			></textarea>
@@ -32,7 +41,9 @@
 	{/if}
 
 	<!-- Preview Column -->
-	<div class="editor__column editor__column--preview">
+	<div
+		class={['editor__column editor__column--preview', showMarkdown ? '!hidden md:!flex' : '!flex']}
+	>
 		<div class="editor__header">
 			<h2 class="editor__title">Preview</h2>
 			<button
