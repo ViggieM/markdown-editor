@@ -37,7 +37,13 @@ class Editor {
 	async select(file: FileWithHandle) {
 		this.selectedFile = file;
 		this.selectedFileTitle = file.name;
-		this.initialFileContent = this.selectedFileContent = await file.text();
+
+		// Get fresh file content from the handle if available
+		const content = file.handle
+			? await (await file.handle.getFile()).text()
+			: await file.text();
+
+		this.initialFileContent = this.selectedFileContent = content;
 	}
 
 	async save() {
@@ -64,12 +70,12 @@ class Editor {
 			if (this.selectedFile.handle) {
 				const fileIndex = await this.findFileIndexByHandle(this.selectedFile.handle);
 				if (fileIndex !== -1) {
-					this.markdownFiles[fileIndex] = this.selectedFile;
+					this.markdownFiles[fileIndex] = updatedFile;
 				}
 			}
 		} else {
 			// Normal save without renaming
-			await fileSave(blob, { fileName: this.selectedFileTitle }, this.selectedFile?.handle, true);
+			await fileSave(blob, {}, this.selectedFile.handle);
 		}
 
 		this.initialFileContent = this.selectedFileContent;
