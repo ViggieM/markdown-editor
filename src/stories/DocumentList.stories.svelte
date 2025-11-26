@@ -3,51 +3,35 @@
 	import DocumentList from '$lib/components/DocumentList.svelte';
 	import { fn } from 'storybook/test';
 
-	const exampleDocuments = [
-		{
-			id: '1',
-			name: 'welcome.md',
-			date: '01 April 2022'
-		},
-		{
-			id: '2',
-			name: 'untitled-document.md',
-			date: '01 April 2022'
-		},
-		{
-			id: '3',
-			name: 'getting-started.md',
-			date: '15 March 2022'
-		},
-		{
-			id: '4',
-			name: 'project-notes.md',
-			date: '10 March 2022'
-		}
+	// Helper function to create mock File objects for Storybook
+	function createMockFile(name, dateString) {
+		const date = new Date(dateString);
+		const blob = new Blob([''], { type: 'text/markdown' });
+		const file = new File([blob], name, {
+			type: 'text/markdown',
+			lastModified: date.getTime()
+		});
+		// Add webkitRelativePath for unique ID
+		Object.defineProperty(file, 'webkitRelativePath', {
+			value: name,
+			writable: false
+		});
+		return file;
+	}
+
+	const exampleFiles = [
+		createMockFile('welcome.md', '2022-04-01'),
+		createMockFile('untitled-document.md', '2022-04-01'),
+		createMockFile('getting-started.md', '2022-03-15'),
+		createMockFile('project-notes.md', '2022-03-10')
 	];
 
-	const manyDocuments = [
-		...exampleDocuments,
-		{
-			id: '5',
-			name: 'meeting-minutes.md',
-			date: '05 March 2022'
-		},
-		{
-			id: '6',
-			name: 'todo-list.md',
-			date: '02 March 2022'
-		},
-		{
-			id: '7',
-			name: 'brainstorming-session.md',
-			date: '28 February 2022'
-		},
-		{
-			id: '8',
-			name: 'design-specs.md',
-			date: '25 February 2022'
-		}
+	const manyFiles = [
+		...exampleFiles,
+		createMockFile('meeting-minutes.md', '2022-03-05'),
+		createMockFile('todo-list.md', '2022-03-02'),
+		createMockFile('brainstorming-session.md', '2022-02-28'),
+		createMockFile('design-specs.md', '2022-02-25')
 	];
 
 	const { Story } = defineMeta({
@@ -62,23 +46,23 @@
 			}
 		},
 		argTypes: {
-			documents: { control: 'object' },
+			files: { control: 'object' },
 			selectedId: { control: 'text' },
-			onDocumentSelect: { action: 'document-selected' }
+			onFileSelect: { action: 'file-selected' }
 		},
 		args: {
-			documents: exampleDocuments,
-			onDocumentSelect: fn((document) => console.log('Document selected:', document))
+			files: exampleFiles,
+			onFileSelect: fn((file) => console.log('File selected:', file))
 		}
 	});
 </script>
 
 <Story name="Default" />
 
-<Story name="Empty" args={{ documents: [] }} />
+<Story name="Empty" args={{ files: [] }} />
 
-<Story name="WithSelection" args={{ documents: exampleDocuments, selectedId: '2' }} />
+<Story name="WithSelection" args={{ files: exampleFiles, selectedId: 'untitled-document.md' }} />
 
-<Story name="ManyDocuments" args={{ documents: manyDocuments }} />
+<Story name="ManyDocuments" args={{ files: manyFiles }} />
 
-<Story name="SingleDocument" args={{ documents: [exampleDocuments[0]] }} />
+<Story name="SingleDocument" args={{ files: [exampleFiles[0]] }} />

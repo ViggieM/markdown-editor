@@ -16,7 +16,7 @@
 
 	let {
 		isMenuOpen = $bindable(),
-		documentName = 'welcome.md',
+		documentName = $bindable(),
 		onSave,
 		onDelete,
 		onMenuToggle,
@@ -33,27 +33,32 @@
 	<div class="header-left">
 		<HamburgerButton isOpen={isMenuOpen} onclick={handleMenuToggle} />
 	</div>
+
 	<div class="header-center">
 		<span class="header-logo">MARKDOWN</span>
-		<div class="header-divider"></div>
-		<div class="header-doc-info">
-			<span class="header-doc-label">Document Name</span>
-			<div class="header-doc-name">
-				<img src={FileIcon} alt="" />
-				<input class="header-doc-name-input" type="text" value={documentName} />
+		{#if documentName}
+			<div class="header-divider"></div>
+			<div class="header-doc-info">
+				<span class="header-doc-label">Document Name</span>
+				<div class="header-doc-name">
+					<img src={FileIcon} alt="" />
+					<input class="header-doc-name-input" type="text" bind:value={documentName} />
+				</div>
 			</div>
+		{/if}
+	</div>
+	{#if documentName}
+		<div class="header-right">
+			<button
+				class="header-delete btn btn-ghost btn-sm shrink-0"
+				onclick={onDelete}
+				aria-label="Delete document"
+			>
+				<img src={TrashIcon} alt="" />
+			</button>
+			<Button size="small" variant="primary" onclick={onSave} disabled={isSaveDisabled}>
+				<img src={SaveIcon} alt="" /><span class="header-save-label">&nbsp;Save Changes</span>
+			</Button>
 		</div>
-	</div>
-	<div class="header-right">
-		<button
-			class="header-delete btn btn-ghost btn-sm shrink-0"
-			onclick={onDelete}
-			aria-label="Delete document"
-		>
-			<img src={TrashIcon} alt="" />
-		</button>
-		<Button size="small" variant="primary" onclick={onSave} disabled={isSaveDisabled}>
-			<img src={SaveIcon} alt="" /><span class="header-save-label">&nbsp;Save Changes</span>
-		</Button>
-	</div>
+	{/if}
 </header>

@@ -1,33 +1,15 @@
 <script lang="ts">
 	import DocumentList from './DocumentList.svelte';
 	import DarkModeToggle from '$lib/components/DarkModeToggle.svelte';
-	import type { Document } from '$lib/types';
+	import { fileStore } from '$lib/stores/editor.svelte';
 
 	interface Props {
 		isMenuOpen: boolean;
 		onNewDocument?: () => void;
-		onDocumentSelect?: (document: Document) => void;
+		onFileSelect?: (file: File) => void;
 	}
 
-	let { isMenuOpen = $bindable(), onNewDocument, onDocumentSelect }: Props = $props();
-
-	const exampleDocuments: Document[] = [
-		{
-			id: '1',
-			name: 'welcome.md',
-			date: '01 April 2022'
-		},
-		{
-			id: '2',
-			name: 'untitled-document.md',
-			date: '01 April 2022'
-		},
-		{
-			id: '3',
-			name: 'getting-started.md',
-			date: '15 March 2022'
-		}
-	];
+	let { isMenuOpen = $bindable(), onNewDocument, onFileSelect }: Props = $props();
 </script>
 
 <aside class="sidebar" class:sidebar--open={isMenuOpen}>
@@ -35,13 +17,19 @@
 		<header class="sidebar__header">
 			<div class="sidebar__logo">MARKDOWN</div>
 			<div class="sidebar__title">My Documents</div>
-			<button class="sidebar__new-document" onclick={() => onNewDocument?.()} type="button">
-				+ New Document
-			</button>
+			{#if fileStore.isFolderSelected}
+				<button class="sidebar__new-document" onclick={() => onNewDocument?.()} type="button">
+					+ New Document
+				</button>
+			{:else}
+				<button class="btn btn-primary w-full mt-4" onclick={() => fileStore.loadFiles()}>
+					Select Directory
+				</button>
+			{/if}
 		</header>
 
 		<div class="sidebar__list">
-			<DocumentList documents={exampleDocuments} {onDocumentSelect} />
+			<DocumentList bind:files={fileStore.markdownFiles} {onFileSelect} />
 		</div>
 
 		<footer class="sidebar__footer">

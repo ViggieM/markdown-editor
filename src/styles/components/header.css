@@ -84,19 +84,10 @@
 	@apply transition-colors duration-200;
 	background-color: transparent;
 	border: none;
-	color: var(--color-gray-500);
 
 	& svg,
 	& img {
 		@apply size-4 md:size-6;
-	}
-
-	&:hover {
-		color: var(--color-orange);
-	}
-
-	&:active {
-		color: var(--color-orange-hover);
 	}
 
 	&:disabled {

@@ -2,16 +2,36 @@
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Editor from '$lib/components/Editor.svelte';
+	import { fileStore } from '$lib/stores/editor.svelte';
 
 	let isMenuOpen = $state(true);
 	let sidebarWidth = $derived(isMenuOpen ? '250px' : '0px');
+
+	let isSaveDisabled = $derived(
+		fileStore.selectedFile?.name === fileStore.selectedFileTitle &&
+			fileStore.selectedFileContent === fileStore.initialFileContent
+	);
+
+	function onFileSelect(file: File) {
+		fileStore.select(file);
+	}
+
+	function onSave() {
+		console.log('Saving...');
+		fileStore.save();
+	}
 </script>
 
 <div class="markdown-editor" style="--sidebar-width: {sidebarWidth}">
-	<div><Sidebar bind:isMenuOpen /></div>
+	<div><Sidebar bind:isMenuOpen {onFileSelect} /></div>
 	<div class="content">
-		<Header bind:isMenuOpen></Header>
-		<Editor></Editor>
+		<Header
+			bind:isMenuOpen
+			bind:documentName={fileStore.selectedFileTitle}
+			{isSaveDisabled}
+			{onSave}
+		></Header>
+		<Editor bind:markdown={fileStore.selectedFileContent}></Editor>
 	</div>
 </div>
 

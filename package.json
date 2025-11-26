@@ -53,6 +53,7 @@
 		"@fontsource/roboto": "^5.2.8",
 		"@fontsource/roboto-mono": "^5.2.8",
 		"@fontsource/roboto-slab": "^5.2.8",
+		"browser-fs-access": "^0.38.0",
 		"marked": "^17.0.1"
 	}
 }
