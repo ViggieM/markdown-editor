@@ -224,25 +224,3 @@
 		font-weight: var(--font-weight-medium);
 	}
 }
-
-/* Custom Scrollbar Styling for Dark Theme */
-.editor__textarea::-webkit-scrollbar,
-.editor__preview::-webkit-scrollbar {
-	width: 8px;
-}
-
-.editor__textarea::-webkit-scrollbar-track,
-.editor__preview::-webkit-scrollbar-track {
-	@apply bg-gray-800 dark:bg-gray-200;
-}
-
-.editor__textarea::-webkit-scrollbar-thumb,
-.editor__preview::-webkit-scrollbar-thumb {
-	@apply bg-gray-700 dark:bg-gray-300;
-	border-radius: 4px;
-}
-
-.editor__textarea::-webkit-scrollbar-thumb:hover,
-.editor__preview::-webkit-scrollbar-thumb:hover {
-	@apply bg-gray-600 dark:bg-gray-400;
-}

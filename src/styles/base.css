@@ -100,3 +100,21 @@ pre {
 pre code {
 	@apply bg-transparent p-0;
 }
+
+/* Custom Scrollbar Styling for Dark Theme */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	@apply bg-gray-800 dark:bg-gray-200;
+}
+
+::-webkit-scrollbar-thumb {
+	@apply bg-gray-600 dark:bg-gray-300;
+	border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	@apply bg-gray-500 dark:bg-gray-400;
+}

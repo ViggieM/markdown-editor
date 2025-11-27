@@ -53,11 +53,11 @@
 		background-color: transparent;
 
 		&:hover {
-			background-color: rgba(228, 102, 67, 0.1);
+			@apply bg-gray-700;
 		}
 
 		&:active {
-			background-color: rgba(228, 102, 67, 0.2);
+			@apply bg-gray-700;
 		}
 	}
 
