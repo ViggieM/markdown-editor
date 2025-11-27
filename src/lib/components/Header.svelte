@@ -4,6 +4,7 @@
 	import SaveIcon from '$lib/assets/save.svg';
 	import TrashIcon from '$lib/assets/trash.svg';
 	import FileIcon from '$lib/assets/file.svg';
+	import { Modal } from '$lib';
 
 	interface Props {
 		isMenuOpen: boolean;
@@ -23,9 +24,20 @@
 		isSaveDisabled = false
 	}: Props = $props();
 
+	let modalIsOpen = $state(false);
+
 	function handleMenuToggle() {
 		isMenuOpen = !isMenuOpen;
 		onMenuToggle?.();
+	}
+
+	function openDeleteModal() {
+		modalIsOpen = true;
+	}
+
+	function handleConfirmDelete() {
+		onDelete?.();
+		modalIsOpen = false;
 	}
 </script>
 
@@ -51,7 +63,7 @@
 		<div class="header-right">
 			<button
 				class="header-delete btn btn-ghost btn-sm shrink-0"
-				onclick={onDelete}
+				onclick={openDeleteModal}
 				aria-label="Delete document"
 			>
 				<img src={TrashIcon} alt="" />
@@ -62,3 +74,16 @@
 		</div>
 	{/if}
 </header>
+
+<Modal size="small" open={modalIsOpen} onclose={() => (modalIsOpen = false)}>
+	{#snippet title()}
+		<h4>Delete this document?</h4>
+	{/snippet}
+	<p>
+		Are you sure you want to delete the {documentName} document and its contents? This action cannot
+		be reversed
+	</p>
+	{#snippet actions()}
+		<Button class="w-full" onclick={handleConfirmDelete}>Confirm & Delete</Button>
+	{/snippet}
+</Modal>

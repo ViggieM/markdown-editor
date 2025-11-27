@@ -34,25 +34,21 @@ h1 {
 h2 {
 	font-size: var(--font-size-2xl);
 	font-weight: var(--font-weight-light);
-	@apply mt-8;
 }
 
 h3 {
 	font-size: var(--font-size-xl);
 	font-weight: var(--font-weight-bold);
-	@apply mt-6;
 }
 
 h4 {
 	font-size: var(--font-size-lg);
 	font-weight: var(--font-weight-bold);
-	@apply mt-6;
 }
 
 h5 {
 	font-size: var(--font-size-md);
 	font-weight: var(--font-weight-bold);
-	@apply mt-4;
 }
 
 h6 {

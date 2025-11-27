@@ -104,7 +104,6 @@
 				<div class="modal__title">
 					{@render title()}
 				</div>
-				<button class="modal__close" onclick={handleClose}>x</button>
 			</header>
 		{/if}
 		<div class="modal__body">

@@ -45,14 +45,13 @@
 	@apply shadow-2xl;
 	@apply flex flex-col;
 	@apply max-h-[90vh] w-full;
+	@apply p-6;
 	min-width: 400px;
 }
 
 /* Header */
 .modal__header {
 	@apply flex items-center justify-between;
-	@apply px-6 py-4;
-	@apply border-b border-gray-300 dark:border-gray-700;
 }
 
 .modal__title {
@@ -85,7 +84,8 @@
 
 /* Body */
 .modal__body {
-	@apply px-6 py-4;
+	@apply text-gray-500 dark:text-gray-400;
+	@apply mt-6;
 	@apply overflow-y-auto;
 	@apply flex-1;
 
@@ -103,8 +103,7 @@
 /* Footer */
 .modal__footer {
 	@apply flex items-center justify-end gap-2;
-	@apply px-6 py-4;
-	@apply border-t border-gray-300 dark:border-gray-700;
+	@apply mt-6;
 }
 
 /* Animations */
