@@ -42,7 +42,7 @@
 
 	<!-- Preview Column -->
 	<div
-		class={['editor__column editor__column--preview', showMarkdown ? '!hidden md:!flex' : '!flex']}
+		class={['editor__column editor__column--preview', showMarkdown ? 'hidden! md:flex!' : 'flex!']}
 	>
 		<div class="editor__header">
 			<h2 class="editor__title">Preview</h2>

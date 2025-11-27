@@ -1,0 +1,14 @@
+<script>
+	import Modal from '$lib/components/Modal.svelte';
+	import Button from '$lib/components/Button.svelte';
+
+	let { children, title = null, actions = null } = $props();
+
+	let open = $state(false);
+</script>
+
+<Button onclick={() => (open = true)}>Open Modal</Button>
+
+<Modal {open} onclose={() => (open = false)} {title} {actions}>
+	{@render children()}
+</Modal>

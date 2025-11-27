@@ -1,0 +1,92 @@
+/**
+ * Modal Component Styles
+ */
+
+/* Dialog element - resets and positioning */
+.modal {
+	@apply border-none p-0 m-0;
+	@apply max-w-none max-h-none;
+
+	/* Center in viewport */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	/* Backdrop styling */
+	&::backdrop {
+		background-color: rgba(21, 22, 25, 0.7);
+	}
+}
+
+/* Modal content container */
+.modal__content {
+	@apply relative;
+	@apply bg-gray-100 text-gray-1000;
+	@apply dark:bg-gray-900 dark:text-gray-100;
+	@apply rounded;
+	border-radius: var(--radius);
+	@apply shadow-2xl;
+	@apply flex flex-col;
+	@apply max-h-[90vh] w-full;
+	min-width: 400px;
+}
+
+/* Header */
+.modal__header {
+	@apply flex items-center justify-between;
+	@apply px-6 py-4;
+	@apply border-b border-gray-300 dark:border-gray-700;
+}
+
+.modal__title {
+	@apply flex-1;
+
+	h2,
+	h3 {
+		@apply m-0;
+		font-size: var(--font-size-xl);
+		font-weight: var(--font-weight-bold);
+		font-family: var(--font-sans);
+	}
+}
+
+/* Close button */
+.modal__close {
+	@apply ml-4;
+	@apply w-8 h-8;
+	@apply flex items-center justify-center;
+	@apply rounded-full;
+	@apply text-gray-500 hover:text-gray-1000 dark:hover:text-gray-100;
+	@apply hover:bg-gray-200 dark:hover:bg-gray-800;
+	@apply transition-colors duration-200;
+	@apply cursor-pointer;
+	@apply border-none bg-transparent;
+	@apply flex-shrink-0;
+	font-size: var(--font-size-2xl);
+	line-height: 1;
+}
+
+/* Body */
+.modal__body {
+	@apply px-6 py-4;
+	@apply overflow-y-auto;
+	@apply flex-1;
+
+	p {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		@apply mt-0;
+	}
+
+	p + p {
+		@apply mt-4;
+	}
+}
+
+/* Footer */
+.modal__footer {
+	@apply flex items-center justify-end gap-2;
+	@apply px-6 py-4;
+	@apply border-t border-gray-300 dark:border-gray-700;
+}

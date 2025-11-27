@@ -68,7 +68,7 @@
 
 /* Textarea Styles */
 .editor__textarea {
-	@apply bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+	@apply bg-gray-100 dark:bg-gray-1000 text-gray-900 dark:text-gray-100;
 	flex: 1;
 	width: 100%;
 	padding: 16px 24px;
@@ -88,7 +88,7 @@
 
 /* Preview Styles */
 .editor__preview {
-	@apply bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+	@apply bg-gray-100 dark:bg-gray-1000 text-gray-900 dark:text-gray-100;
 	flex: 1;
 	padding: 16px 24px;
 	font-family: var(--font-sans);
