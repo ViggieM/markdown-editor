@@ -2,11 +2,19 @@
 
 This tutorial will guide you through building a Modal component using the HTML `<dialog>` element. We'll build it incrementally, testing each step along the way.
 
+## Story Pattern
+
+This tutorial uses a simplified story pattern with:
+- **ModalExample wrapper**: A component that manages modal state internally for simpler stories
+- **asChild prop**: Storybook's `asChild` pattern for cleaner story composition
+- **Two approaches**: Simple stories use ModalExample, complex stories (with forms, custom state) use Modal directly
+
 ## Prerequisites
 
 - Project is running (`pnpm dev` or Storybook `pnpm storybook`)
 - Understanding of Svelte 5 runes (`$state`, `$props`, `$derived`, `$effect`)
 - Familiarity with TypeScript and snippets
+- Understanding of Storybook's `asChild` pattern
 
 ---
 
@@ -66,33 +74,56 @@ Add this line:
 export { default as Modal } from './components/Modal.svelte';
 ```
 
-### 1.3 Create a test story
+### 1.3 Create a wrapper component for stories
+
+Create: `/src/stories/ModalExample.svelte`
+
+This component manages the modal state internally so stories can be simpler.
+
+```svelte
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Button from '$lib/components/Button.svelte';
+
+	interface Props {
+		children: Snippet;
+		title?: Snippet;
+		actions?: Snippet;
+		size?: 'small' | 'medium' | 'large';
+	}
+
+	let { children, title, actions, size }: Props = $props();
+	let open = $state(false);
+</script>
+
+<Button onclick={() => (open = true)}>Open Modal</Button>
+
+<Modal {open} onclose={() => (open = false)} {size} {title} {actions}>
+	{@render children()}
+</Modal>
+```
+
+### 1.4 Create a test story
 
 Create: `/src/stories/Modal.stories.svelte`
 
 ```svelte
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import Modal from '$lib/components/Modal.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import ModalExample from './ModalExample.svelte';
 
 	const { Story } = defineMeta({
 		title: 'Components/Modal',
-		component: Modal,
+		component: ModalExample,
 		tags: ['autodocs']
 	});
 </script>
 
-<Story name="Basic">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Modal</Button>
-
-	<Modal {open}>
-		<p>Hello! This is a basic modal.</p>
-	</Modal>
+<Story name="Basic" asChild>
+	<ModalExample>
+		<p>This is just a modal without a header and title</p>
+	</ModalExample>
 </Story>
 ```
 
@@ -212,21 +243,15 @@ Update the Props interface:
 <!-- Keep the same style block -->
 ```
 
-### 2.4 Update the story to handle close
+### 2.4 Update the story to test close behavior
 
-Edit: `/src/stories/Modal.stories.svelte`
+The story remains simple - ModalExample handles the state:
 
 ```svelte
-<Story name="Basic">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Modal</Button>
-
-	<Modal {open} onclose={() => (open = false)}>
+<Story name="Basic" asChild>
+	<ModalExample>
 		<p>Hello! This is a basic modal.</p>
-	</Modal>
+	</ModalExample>
 </Story>
 ```
 
@@ -448,44 +473,29 @@ Add to the `<style>` block:
 
 Edit: `/src/stories/Modal.stories.svelte`
 
-Add these stories:
+Add these stories using the asChild pattern:
 
 ```svelte
-<Story name="With Title">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Modal</Button>
-
-	<Modal {open} onclose={() => (open = false)}>
+<Story name="With Title" asChild>
+	<ModalExample>
 		{#snippet title()}
-			<h2 style="margin: 0;">Welcome!</h2>
+			<h2 style="margin: 0;">Modal Title</h2>
 		{/snippet}
-
-		<p>This modal has a title and a close button in the header.</p>
-	</Modal>
+		<p>Hello! This is a modal with a title.</p>
+	</ModalExample>
 </Story>
 
-<Story name="With Actions">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Modal</Button>
-
-	<Modal {open} onclose={() => (open = false)}>
+<Story name="With Actions" asChild>
+	<ModalExample>
 		{#snippet title()}
-			<h2 style="margin: 0;">Confirm Action</h2>
+			<h2 style="margin: 0;">Modal Title</h2>
 		{/snippet}
-
 		<p>Are you sure you want to proceed?</p>
-
 		{#snippet actions()}
-			<Button variant="ghost" onclick={() => (open = false)}>Cancel</Button>
-			<Button onclick={() => (open = false)}>Confirm</Button>
+			<Button variant="ghost" onclick={() => {}}>Cancel</Button>
+			<Button onclick={() => {}}>Confirm</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 ```
 
@@ -719,12 +729,12 @@ Add after `.modal__content`:
 
 Edit: `/src/stories/Modal.stories.svelte`
 
-Add to the defineMeta argTypes:
+Update the defineMeta to include ModalExample and argTypes:
 
 ```svelte
 const { Story } = defineMeta({
 	title: 'Components/Modal',
-	component: Modal,
+	component: ModalExample,
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
@@ -735,49 +745,33 @@ const { Story } = defineMeta({
 });
 ```
 
-Add new stories:
+Add new stories using asChild:
 
 ```svelte
-<Story name="Small Size">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Small Modal</Button>
-
-	<Modal {open} onclose={() => (open = false)} size="small">
+<Story name="Small Size" asChild>
+	<ModalExample size="small">
 		{#snippet title()}
 			<h2 style="margin: 0;">Small Modal</h2>
 		{/snippet}
-
 		<p>This is a small modal, perfect for alerts.</p>
-
 		{#snippet actions()}
-			<Button onclick={() => (open = false)}>OK</Button>
+			<Button onclick={() => {}}>OK</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 
-<Story name="Large Size">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Large Modal</Button>
-
-	<Modal {open} onclose={() => (open = false)} size="large">
+<Story name="Large Size" asChild>
+	<ModalExample size="large">
 		{#snippet title()}
 			<h2 style="margin: 0;">Large Modal</h2>
 		{/snippet}
-
 		<p>This is a large modal with more content space.</p>
 		<p>Perfect for forms or detailed information.</p>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-
 		{#snippet actions()}
-			<Button onclick={() => (open = false)}>Close</Button>
+			<Button onclick={() => {}}>Close</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 ```
 
@@ -968,16 +962,48 @@ Update the dialog's `onclose` handler:
 >
 ```
 
-### 9.3 Add test story
+### 9.3 Update ModalExample to support behavior props
+
+First, update ModalExample to accept and pass through the behavior props:
+
+Edit: `/src/stories/ModalExample.svelte`
+
+```svelte
+<script lang="ts">
+	import type { Snippet } from 'svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Button from '$lib/components/Button.svelte';
+
+	interface Props {
+		children: Snippet;
+		title?: Snippet;
+		actions?: Snippet;
+		size?: 'small' | 'medium' | 'large';
+		closeOnBackdrop?: boolean;
+		closeOnEscape?: boolean;
+	}
+
+	let { children, title, actions, size, closeOnBackdrop, closeOnEscape }: Props = $props();
+	let open = $state(false);
+</script>
+
+<Button onclick={() => (open = true)}>Open Modal</Button>
+
+<Modal {open} onclose={() => (open = false)} {size} {title} {actions} {closeOnBackdrop} {closeOnEscape}>
+	{@render children()}
+</Modal>
+```
+
+### 9.4 Add test story
 
 Edit: `/src/stories/Modal.stories.svelte`
 
-Add argTypes:
+Update argTypes:
 
 ```svelte
 const { Story } = defineMeta({
 	title: 'Components/Modal',
-	component: Modal,
+	component: ModalExample,
 	tags: ['autodocs'],
 	argTypes: {
 		size: {
@@ -990,32 +1016,22 @@ const { Story } = defineMeta({
 });
 ```
 
-Add story:
+Add story using asChild:
 
 ```svelte
-<Story name="No Backdrop Close">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<div>
-		<Button onclick={() => (open = true)}>Open Modal</Button>
-		<p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">
-			Try clicking outside - modal won't close
-		</p>
-	</div>
-
-	<Modal {open} onclose={() => (open = false)} closeOnBackdrop={false}>
+<Story name="No Backdrop Close" asChild>
+	<ModalExample closeOnBackdrop={false}>
 		{#snippet title()}
 			<h2 style="margin: 0;">Can't Close on Backdrop</h2>
 		{/snippet}
-
 		<p>This modal requires explicit close action using the button or ESC key.</p>
-
+		<p style="margin-top: 0.5rem; font-size: 0.875rem; color: #666;">
+			Try clicking outside - modal won't close
+		</p>
 		{#snippet actions()}
-			<Button onclick={() => (open = false)}>Close</Button>
+			<Button onclick={() => {}}>Close</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 ```
 
@@ -1057,7 +1073,6 @@ Update the dialog element:
 	class={modalClass}
 	aria-labelledby={title ? 'modal-title' : undefined}
 	aria-describedby="modal-description"
-	role="dialog"
 	aria-modal="true"
 >
 	<div class="modal__content" onclick={(e) => e.stopPropagation()}>
@@ -1150,6 +1165,8 @@ $effect(() => {
 
 **Goal**: Create comprehensive examples for all common use cases.
 
+**Note**: For simple examples, we can use ModalExample with asChild. For more complex stories that need custom logic (like tracking confirmation results or form state), we'll use the traditional Story approach without asChild.
+
 ### 11.1 Add complete stories
 
 Edit: `/src/stories/Modal.stories.svelte`
@@ -1157,28 +1174,24 @@ Edit: `/src/stories/Modal.stories.svelte`
 Add these stories:
 
 ```svelte
-<Story name="Alert Modal">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Show Alert</Button>
-
-	<Modal {open} onclose={() => (open = false)} size="small">
+<!-- Simple examples using asChild pattern -->
+<Story name="Alert Modal" asChild>
+	<ModalExample size="small">
 		{#snippet title()}
 			<h2 style="margin: 0;">⚠️ Alert</h2>
 		{/snippet}
-
 		<p>This is an important message that requires your attention.</p>
-
 		{#snippet actions()}
-			<Button onclick={() => (open = false)}>OK</Button>
+			<Button onclick={() => {}}>OK</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 
+<!-- Complex examples that need custom state management -->
 <Story name="Confirmation Modal">
 	<script>
+		import Modal from '$lib/components/Modal.svelte';
+
 		let open = $state(false);
 		let result = $state('');
 
@@ -1204,9 +1217,7 @@ Add these stories:
 		{#snippet title()}
 			<h2 style="margin: 0;">Confirm Delete</h2>
 		{/snippet}
-
 		<p>Are you sure you want to delete this item? This action cannot be undone.</p>
-
 		{#snippet actions()}
 			<Button variant="ghost" onclick={handleCancel}>Cancel</Button>
 			<Button onclick={handleConfirm}>Delete</Button>
@@ -1216,6 +1227,8 @@ Add these stories:
 
 <Story name="Form Modal">
 	<script>
+		import Modal from '$lib/components/Modal.svelte';
+
 		let open = $state(false);
 		let formData = $state({ name: '', email: '' });
 
@@ -1273,14 +1286,9 @@ Add these stories:
 	</Modal>
 </Story>
 
-<Story name="Long Content">
-	<script>
-		let open = $state(false);
-	</script>
-
-	<Button onclick={() => (open = true)}>Open Long Content</Button>
-
-	<Modal {open} onclose={() => (open = false)} size="medium">
+<!-- Simple example using asChild -->
+<Story name="Long Content" asChild>
+	<ModalExample size="medium">
 		{#snippet title()}
 			<h2 style="margin: 0;">Terms and Conditions</h2>
 		{/snippet}
@@ -1294,10 +1302,10 @@ Add these stories:
 		{/each}
 
 		{#snippet actions()}
-			<Button variant="ghost" onclick={() => (open = false)}>Decline</Button>
-			<Button onclick={() => (open = false)}>Accept</Button>
+			<Button variant="ghost" onclick={() => {}}>Decline</Button>
+			<Button onclick={() => {}}>Accept</Button>
 		{/snippet}
-	</Modal>
+	</ModalExample>
 </Story>
 ```
 
@@ -1495,9 +1503,37 @@ Test each item and check it off:
 - [ ] Clicking modal content doesn't close it
 - [ ] Form submission works (Form Modal story)
 
-### 12.3 Usage in Your App
+### 12.3 Usage Patterns
 
-To use the Modal in your application:
+There are two ways to use Modal in your application:
+
+#### Option 1: Using ModalExample (recommended for simple cases)
+
+For simple modals where you just need to show content with optional title and actions:
+
+```svelte
+<script>
+	import ModalExample from './ModalExample.svelte';
+	import Button from '$lib/components/Button.svelte';
+</script>
+
+<!-- In Storybook stories -->
+<Story name="My Modal" asChild>
+	<ModalExample>
+		{#snippet title()}
+			<h2 style="margin: 0;">My Modal</h2>
+		{/snippet}
+		<p>Modal content goes here.</p>
+		{#snippet actions()}
+			<Button onclick={() => {}}>Close</Button>
+		{/snippet}
+	</ModalExample>
+</Story>
+```
+
+#### Option 2: Using Modal directly (for complex logic)
+
+For modals that need custom state management, form handling, or result tracking:
 
 ```svelte
 <script>
@@ -1571,12 +1607,39 @@ If you want to extend the Modal further:
 ## Summary of Files
 
 **Created:**
-- `/src/lib/components/Modal.svelte` - Main component
+- `/src/lib/components/Modal.svelte` - Main Modal component
 - `/src/styles/components/modal.css` - Component styles
-- `/src/stories/Modal.stories.svelte` - Storybook stories
+- `/src/stories/ModalExample.svelte` - Wrapper component for simple stories (manages state internally)
+- `/src/stories/Modal.stories.svelte` - Storybook stories using both asChild and traditional patterns
 
 **Modified:**
 - `/src/lib/index.ts` - Added Modal export
 - `/src/styles/components/index.css` - Added modal.css import
+
+## Key Patterns
+
+**Simple Stories (recommended):**
+```svelte
+<Story name="Example" asChild>
+  <ModalExample>
+    <p>Content</p>
+  </ModalExample>
+</Story>
+```
+
+**Complex Stories (when needed):**
+```svelte
+<Story name="Example">
+  <script>
+    import Modal from '$lib/components/Modal.svelte';
+    let open = $state(false);
+  </script>
+
+  <Button onclick={() => (open = true)}>Open</Button>
+  <Modal {open} onclose={() => (open = false)}>
+    <p>Content</p>
+  </Modal>
+</Story>
+```
 
 You now have a fully functional Modal component! 🚀
