@@ -9,6 +9,7 @@ class Editor {
 	selectedFileTitle: string;
 	selectedFileContent: string;
 	initialFileContent: string;
+	directoryHandle: FileSystemDirectoryHandle | null;
 
 	constructor() {
 		this.isFolderSelected = $state(false);
@@ -17,16 +18,19 @@ class Editor {
 		this.selectedFileTitle = $state('');
 		this.selectedFileContent = $state('');
 		this.initialFileContent = $state('');
+		this.directoryHandle = $state(null);
 	}
 
 	async loadFiles() {
-		const files = await directoryOpen({
-			recursive: true,
-			mode: 'readwrite',
-			startIn: 'documents',
+		this.directoryHandle = await window.showDirectoryPicker({
 			id: 'my-markdown-editor',
-			skipDirectory: (entry) => entry.name.startsWith('.') // Skip hidden folders
+			mode: 'readwrite',
+			startIn: 'documents'
 		});
+		if (!this.directoryHandle) return;
+
+		const files: DirectoryFiles = [];
+		await this.readDirectory(this.directoryHandle, files);
 		// Filter for markdown files
 		this.markdownFiles = files.filter(
 			(blob) => blob.name.endsWith('.md') || blob.name.endsWith('.markdown')
@@ -34,14 +38,21 @@ class Editor {
 		this.isFolderSelected = true;
 	}
 
+	async readDirectory(directoryHandle: FileSystemDirectoryHandle, files: DirectoryFiles) {
+		for await (const entry of directoryHandle.values()) {
+			if (entry.kind === 'file') {
+				const file = await entry.getFile();
+				files.push(Object.assign(file, { handle: entry }));
+			}
+		}
+	}
+
 	async select(file: FileWithHandle) {
 		this.selectedFile = file;
 		this.selectedFileTitle = file.name;
 
 		// Get fresh file content from the handle if available
-		const content = file.handle
-			? await (await file.handle.getFile()).text()
-			: await file.text();
+		const content = file.handle ? await (await file.handle.getFile()).text() : await file.text();
 
 		this.initialFileContent = this.selectedFileContent = content;
 	}
@@ -89,6 +100,29 @@ class Editor {
 			}
 		}
 		return -1;
+	}
+
+	async createNewFile() {
+		if (!this.directoryHandle) return;
+
+		const newFileHandle = await this.directoryHandle.getFileHandle('Untitled.md', { create: true });
+		const newFile = await newFileHandle.getFile();
+		const fileWithHandle = Object.assign(newFile, { handle: newFileHandle });
+		this.markdownFiles.push(fileWithHandle);
+		await this.select(fileWithHandle);
+	}
+
+	async deleteSelectedFile() {
+		if (!this.selectedFile) return;
+
+		const handle = this.selectedFile.handle;
+		if (handle) {
+			await handle.remove();
+			const fileIndex = await this.findFileIndexByHandle(handle);
+			if (fileIndex !== -1) {
+				this.markdownFiles.splice(fileIndex, 1);
+			}
+		}
 	}
 }
 

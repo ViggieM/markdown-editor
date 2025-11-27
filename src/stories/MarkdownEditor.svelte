@@ -20,16 +20,25 @@
 		console.log('Saving...');
 		fileStore.save();
 	}
+
+	function onNewDocument() {
+		fileStore.createNewFile();
+	}
+
+	function onDelete() {
+		fileStore.deleteSelectedFile();
+	}
 </script>
 
 <div class="markdown-editor" style="--sidebar-width: {sidebarWidth}">
-	<div><Sidebar bind:isMenuOpen {onFileSelect} /></div>
+	<div><Sidebar bind:isMenuOpen {onFileSelect} {onNewDocument} /></div>
 	<div class="content">
 		<Header
 			bind:isMenuOpen
 			bind:documentName={fileStore.selectedFileTitle}
 			{isSaveDisabled}
 			{onSave}
+			{onDelete}
 		></Header>
 		<Editor bind:markdown={fileStore.selectedFileContent}></Editor>
 	</div>
