@@ -7,6 +7,11 @@
 	@apply border-none p-0 m-0;
 	@apply max-w-none max-h-none;
 
+	/* Remove native dialog border, outline, and background */
+	border: none;
+	outline: none;
+	background: transparent;
+
 	/* Center in viewport */
 	position: fixed;
 	top: 50%;

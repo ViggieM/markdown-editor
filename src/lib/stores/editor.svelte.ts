@@ -47,7 +47,12 @@ class Editor {
 		}
 	}
 
-	async select(file: FileWithHandle) {
+	async select(file: FileWithHandle | null) {
+		if (!file) {
+			this.selectedFile = null;
+			this.selectedFileTitle = this.selectedFileContent = this.initialFileContent = '';
+			return;
+		}
 		this.selectedFile = file;
 		this.selectedFileTitle = file.name;
 
@@ -122,6 +127,7 @@ class Editor {
 			if (fileIndex !== -1) {
 				this.markdownFiles.splice(fileIndex, 1);
 			}
+			this.select(null);
 		}
 	}
 }
