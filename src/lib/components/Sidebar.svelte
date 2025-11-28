@@ -29,7 +29,11 @@
 		</header>
 
 		<div class="sidebar__list">
-			<DocumentList bind:files={fileStore.markdownFiles} {onFileSelect} />
+			<DocumentList
+				bind:files={fileStore.markdownFiles}
+				{onFileSelect}
+				selectedId={fileStore.selectedFile?.name}
+			/>
 		</div>
 
 		<footer class="sidebar__footer">
