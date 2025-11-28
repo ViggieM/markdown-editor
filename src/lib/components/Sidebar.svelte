@@ -17,7 +17,7 @@
 		<header class="sidebar__header">
 			<div class="sidebar__logo">MARKDOWN</div>
 			<div class="sidebar__title">My Documents</div>
-			{#if fileStore.isFolderSelected}
+			{#if fileStore.directoryHandle}
 				<button class="sidebar__new-document" onclick={() => onNewDocument?.()} type="button">
 					+ New Document
 				</button>
@@ -32,7 +32,7 @@
 			<DocumentList
 				bind:files={fileStore.markdownFiles}
 				{onFileSelect}
-				selectedId={fileStore.selectedFile?.name}
+				selectedIdx={fileStore.selectedFileIdx}
 			/>
 		</div>
 

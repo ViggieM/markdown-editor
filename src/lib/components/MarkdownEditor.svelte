@@ -3,44 +3,53 @@
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Editor from '$lib/components/Editor.svelte';
 	import { fileStore } from '$lib/stores/editor.svelte';
+	import type { FileWithHandle } from 'browser-fs-access';
 
 	let isMenuOpen = $state(true);
 	let sidebarWidth = $derived(isMenuOpen ? '250px' : '0px');
 
+	let selectedFile: FileWithHandle | undefined = $derived(
+		fileStore.markdownFiles[fileStore.selectedFileIdx]
+	);
+	let documentName = $state('');
+	let fileContent = $state('');
+	let initialContent = $state('');
+
 	let isSaveDisabled = $derived(
-		fileStore.selectedFile?.name === fileStore.selectedFileTitle &&
-			fileStore.selectedFileContent === fileStore.initialFileContent
+		selectedFile?.name === documentName && fileContent === initialContent
 	);
 
-	function onFileSelect(file: File) {
+	async function onFileSelect(file: FileWithHandle) {
+		console.log('selectedFileIdx', fileStore.selectedFileIdx);
 		fileStore.select(file);
+		selectedFile = file;
+		documentName = selectedFile?.name || '';
+		fileContent = initialContent = await fileStore.readFile(file);
 	}
 
 	function onSave() {
-		console.log('Saving...');
-		fileStore.save();
+		if (!selectedFile || !selectedFile.handle) return;
+		fileStore.save(selectedFile, documentName, fileContent);
 	}
 
 	function onNewDocument() {
 		fileStore.createNewFile();
+		selectedFile = fileStore.markdownFiles[fileStore.selectedFileIdx];
 	}
 
 	function onDelete() {
-		fileStore.deleteSelectedFile();
+		if (!selectedFile) return;
+		fileStore.deleteFile(selectedFile);
+		fileStore.select(null);
+		documentName = fileContent = initialContent = '';
 	}
 </script>
 
 <div class="markdown-editor" style="--sidebar-width: {sidebarWidth}">
 	<div><Sidebar bind:isMenuOpen {onFileSelect} {onNewDocument} /></div>
 	<div class="content">
-		<Header
-			bind:isMenuOpen
-			bind:documentName={fileStore.selectedFileTitle}
-			{isSaveDisabled}
-			{onSave}
-			{onDelete}
-		></Header>
-		<Editor bind:markdown={fileStore.selectedFileContent}></Editor>
+		<Header bind:isMenuOpen bind:documentName {isSaveDisabled} {onSave} {onDelete}></Header>
+		<Editor bind:markdown={fileContent}></Editor>
 	</div>
 </div>
 

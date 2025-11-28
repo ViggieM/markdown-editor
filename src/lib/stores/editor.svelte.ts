@@ -1,44 +1,29 @@
-import { directoryOpen, fileSave, type FileWithHandle } from 'browser-fs-access';
-
-type DirectoryFiles = Awaited<ReturnType<typeof directoryOpen>>;
+import { type FileWithHandle } from 'browser-fs-access';
+import { BrowserFileSystemService, type IFileSystemService } from '$lib/services/FileSystemService';
 
 class Editor {
-	isFolderSelected: boolean;
-	markdownFiles: DirectoryFiles;
-	selectedFile: FileWithHandle | null;
-	selectedFileTitle: string;
-	selectedFileContent: string;
-	initialFileContent: string;
+	markdownFiles: FileWithHandle[];
+	selectedFileIdx: number;
 	directoryHandle: FileSystemDirectoryHandle | null;
 
-	constructor() {
-		this.isFolderSelected = $state(false);
+	constructor(private fileSystem: IFileSystemService = new BrowserFileSystemService()) {
 		this.markdownFiles = $state([]);
-		this.selectedFile = $state(null);
-		this.selectedFileTitle = $state('');
-		this.selectedFileContent = $state('');
-		this.initialFileContent = $state('');
+		this.selectedFileIdx = $state(-1);
 		this.directoryHandle = $state(null);
 	}
 
 	async loadFiles() {
-		this.directoryHandle = await window.showDirectoryPicker({
-			id: 'my-markdown-editor',
-			mode: 'readwrite',
-			startIn: 'documents'
-		});
+		this.directoryHandle = await this.fileSystem.selectDirectory();
 		if (!this.directoryHandle) return;
 
-		const files: DirectoryFiles = [];
-		await this.readDirectory(this.directoryHandle, files);
+		await this.readDirectory(this.directoryHandle, this.markdownFiles);
 		// Filter for markdown files
-		this.markdownFiles = files.filter(
+		this.markdownFiles = this.markdownFiles.filter(
 			(blob) => blob.name.endsWith('.md') || blob.name.endsWith('.markdown')
 		);
-		this.isFolderSelected = true;
 	}
 
-	async readDirectory(directoryHandle: FileSystemDirectoryHandle, files: DirectoryFiles) {
+	async readDirectory(directoryHandle: FileSystemDirectoryHandle, files: FileWithHandle[]) {
 		for await (const entry of directoryHandle.values()) {
 			if (entry.kind === 'file') {
 				const file = await entry.getFile();
@@ -47,54 +32,27 @@ class Editor {
 		}
 	}
 
-	async select(file: FileWithHandle | null) {
-		if (!file) {
-			this.selectedFile = null;
-			this.selectedFileTitle = this.selectedFileContent = this.initialFileContent = '';
-			return;
-		}
-		this.selectedFile = file;
-		this.selectedFileTitle = file.name;
-
-		// Get fresh file content from the handle if available
-		const content = file.handle ? await (await file.handle.getFile()).text() : await file.text();
-
-		this.initialFileContent = this.selectedFileContent = content;
+	async readFile(file: FileWithHandle) {
+		return file.handle ? await (await file.handle.getFile()).text() : await file.text();
 	}
 
-	async save() {
-		if (!this.selectedFile) return;
-
-		const blob = new Blob([this.selectedFileContent], { type: 'text/markdown' });
-		const originalName = this.selectedFile.name;
-		const hasNameChanged = this.selectedFileTitle !== originalName;
-
-		if (hasNameChanged && this.selectedFile.handle) {
-			// Save content to the existing file first
-			await fileSave(blob, {}, this.selectedFile.handle, true);
-
-			// Then rename the file using the move() API
-			await this.selectedFile.handle.move(this.selectedFileTitle);
-
-			// Update the selectedFile reference to reflect the new file state
-			// Preserve the handle since getFile() returns a plain File object
-			const handle = this.selectedFile.handle;
-			const updatedFile = await handle.getFile();
-			this.selectedFile = Object.assign(updatedFile, { handle });
-
-			// Update the file in the markdownFiles array
-			if (this.selectedFile.handle) {
-				const fileIndex = await this.findFileIndexByHandle(this.selectedFile.handle);
-				if (fileIndex !== -1) {
-					this.markdownFiles[fileIndex] = updatedFile;
-				}
-			}
-		} else {
-			// Normal save without renaming
-			await fileSave(blob, {}, this.selectedFile.handle);
+	async select(file: FileWithHandle | null) {
+		if (!file) {
+			this.selectedFileIdx = -1;
+			return;
 		}
 
-		this.initialFileContent = this.selectedFileContent;
+		if (!file.handle) return;
+		this.selectedFileIdx = await this.findFileIndexByHandle(file.handle);
+	}
+
+	async save(file: FileWithHandle, name: string, content: string) {
+		if (!file.handle) return;
+		await this.fileSystem.writeFile(file.handle, content);
+		if (file.name !== name) {
+			const updatedFile = await this.fileSystem.renameFile(file.handle, name);
+			this.markdownFiles[this.selectedFileIdx] = updatedFile;
+		}
 	}
 
 	private async findFileIndexByHandle(handle: FileSystemFileHandle): Promise<number> {
@@ -117,18 +75,15 @@ class Editor {
 		await this.select(fileWithHandle);
 	}
 
-	async deleteSelectedFile() {
-		if (!this.selectedFile) return;
+	async deleteFile(file: FileWithHandle) {
+		if (!file.handle) return;
 
-		const handle = this.selectedFile.handle;
-		if (handle) {
-			await handle.remove();
-			const fileIndex = await this.findFileIndexByHandle(handle);
-			if (fileIndex !== -1) {
-				this.markdownFiles.splice(fileIndex, 1);
-			}
-			this.select(null);
+		await this.fileSystem.deleteFile(file.handle);
+		const fileIndex = await this.findFileIndexByHandle(file.handle);
+		if (fileIndex !== -1) {
+			this.markdownFiles.splice(fileIndex, 1);
 		}
+		this.select(null);
 	}
 }
 

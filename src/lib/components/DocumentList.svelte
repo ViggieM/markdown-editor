@@ -5,24 +5,19 @@
 
 	interface Props {
 		files: FileWithHandle[];
-		selectedId?: string;
+		selectedIdx?: number;
 		onFileSelect?: (file: FileWithHandle) => void;
 	}
 
-	let { files = $bindable(), selectedId, onFileSelect }: Props = $props();
-
-	// Transform File to display data
-	function getFileId(file: FileWithHandle): string {
-		return file.webkitRelativePath || file.name;
-	}
+	let { files = $bindable(), selectedIdx, onFileSelect }: Props = $props();
 </script>
 
 <ul class="document-list">
-	{#each files as file (getFileId(file))}
+	{#each files as file, idx (idx)}
 		<li class="document-list__item">
 			<button
 				class="document-list__button"
-				class:document-list__button--selected={selectedId === getFileId(file)}
+				class:document-list__button--selected={idx === selectedIdx}
 				onclick={() => onFileSelect?.(file)}
 				type="button"
 			>
