@@ -63,4 +63,8 @@
 
 	/* ===== Spacing & Layout ===== */
 	--radius: 4px;
+
+	/* Animations */
+	--transition-fast: 200ms;
+	--transition-normal: 300ms;
 }

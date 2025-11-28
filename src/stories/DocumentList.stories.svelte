@@ -1,10 +1,11 @@
-<script module>
+<script module lang="ts">
 	import { defineMeta } from '@storybook/addon-svelte-csf';
 	import DocumentList from '$lib/components/DocumentList.svelte';
 	import { fn } from 'storybook/test';
+	import type { FileWithHandle } from 'browser-fs-access';
 
 	// Helper function to create mock File objects for Storybook
-	function createMockFile(name, dateString) {
+	function createMockFile(name: string, dateString: string): FileWithHandle {
 		const date = new Date(dateString);
 		const blob = new Blob([''], { type: 'text/markdown' });
 		const file = new File([blob], name, {

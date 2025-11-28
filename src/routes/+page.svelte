@@ -1,5 +1,5 @@
 <script>
-	import MarkdownEditor from '../stories/MarkdownEditor.svelte';
+	import MarkdownEditor from '$lib/components/MarkdownEditor.svelte';
 </script>
 
 <MarkdownEditor />

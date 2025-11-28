@@ -47,7 +47,7 @@
 	</div>
 
 	<div class="header-center">
-		<span class="header-logo">MARKDOWN</span>
+		<h1 class="header-logo">MARKDOWN</h1>
 		{#if documentName}
 			<div class="header-divider"></div>
 			<div class="header-doc-info">

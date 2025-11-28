@@ -8,13 +8,6 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
-
-	// File System Access API extensions
-	interface FileSystemFileHandle {
-		move(name: string): Promise<void>;
-		move(destinationDirectory: FileSystemDirectoryHandle): Promise<void>;
-		move(destinationDirectory: FileSystemDirectoryHandle, newName: string): Promise<void>;
-	}
 }
 
 export {};

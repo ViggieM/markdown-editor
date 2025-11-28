@@ -1,6 +1,6 @@
 <script module>
 	import { defineMeta } from '@storybook/addon-svelte-csf';
-	import MarkdownEditor from './MarkdownEditor.svelte';
+	import MarkdownEditor from '$lib/components/MarkdownEditor.svelte';
 
 	// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 	const { Story } = defineMeta({

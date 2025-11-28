@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { FileWithHandle } from 'browser-fs-access';
 	import FileIcon from '$lib/assets/file.svg?raw';
+	import { formatDate } from '$lib/utils/date';
 
 	interface Props {
 		files: FileWithHandle[];
@@ -13,14 +14,6 @@
 	// Transform File to display data
 	function getFileId(file: FileWithHandle): string {
 		return file.webkitRelativePath || file.name;
-	}
-
-	function formatDate(timestamp: number): string {
-		const date = new Date(timestamp);
-		const day = String(date.getDate()).padStart(2, '0');
-		const month = date.toLocaleDateString('en-US', { month: 'long' });
-		const year = date.getFullYear();
-		return `${day} ${month} ${year}`;
 	}
 </script>
 

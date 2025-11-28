@@ -112,7 +112,7 @@
 	color: inherit;
 	font-family: inherit;
 	font-size: inherit;
-	transition: border-color 200ms ease-in-out;
+	transition: border-color var(--transition-fast) ease-in-out;
 }
 
 .header-doc-name-input:focus {

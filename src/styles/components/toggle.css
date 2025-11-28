@@ -4,14 +4,6 @@
  * Dark/Light mode toggle component from Figma design
  */
 
-.toggle-container {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	padding: 0.5rem;
-	border-radius: var(--radius);
-}
-
 .toggle-option {
 	display: flex;
 	align-items: center;
@@ -24,7 +16,7 @@
 	border: none;
 	border-radius: var(--radius);
 	cursor: pointer;
-	transition: all 0.2s ease;
+	transition: all var(--transition-fast) ease;
 }
 
 .toggle-option:hover {

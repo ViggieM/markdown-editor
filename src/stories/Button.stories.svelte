@@ -38,5 +38,5 @@
 <Story name="Disabled" args={{ variant: 'primary', disabled: true }}>New Document</Story>
 
 <Story name="Button with Icon" args={{ variant: 'primary' }}>
-	<img src={saveIcon} />New Document
+	<img src={saveIcon} alt="Save Icon" />New Document
 </Story>
