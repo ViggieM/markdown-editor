@@ -103,7 +103,7 @@ pre code {
 }
 
 ::-webkit-scrollbar-track {
-	@apply bg-gray-800 dark:bg-gray-200;
+	@apply bg-gray-200 dark:bg-gray-700;
 }
 
 ::-webkit-scrollbar-thumb {
