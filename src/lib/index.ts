@@ -2,4 +2,4 @@
 
 export { default as DarkModeToggle } from '$lib/components/DarkModeToggle.svelte';
 export { default as Modal } from '$lib/components/Modal.svelte';
-export { themeState } from './stores/theme.svelte';
+export { getTheme, setTheme, initializeTheme } from './stores/theme.svelte';

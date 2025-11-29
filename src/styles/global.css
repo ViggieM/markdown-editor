@@ -34,5 +34,5 @@
 /* Import utility classes */
 @import './utilities.css';
 
-/* Dark mode configuration - class-based toggling */
-@custom-variant dark (&:where(.dark, .dark *));
+/* Dark mode configuration - data-theme attribute approach */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
