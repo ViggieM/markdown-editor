@@ -6,7 +6,9 @@
 	let { children } = $props();
 
 	$effect(() => {
-		initializeTheme();
+		initializeTheme().catch((error) => {
+			console.error('Failed to initialize theme:', error);
+		});
 	});
 </script>
 

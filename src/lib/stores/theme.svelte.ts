@@ -9,14 +9,16 @@ import {
 	isValidTheme,
 	type Theme
 } from '$lib/themes';
+import { createStorageService } from '$lib/services/StoreService';
 
 let currentTheme = $state<Theme>(DEFAULT_THEME);
+const storage = createStorageService();
 
 export function getTheme(): Theme {
 	return currentTheme;
 }
 
-export function setTheme(newTheme: Theme): void {
+export async function setTheme(newTheme: Theme): Promise<void> {
 	if (!isValidTheme(newTheme)) {
 		console.warn(`Invalid theme: ${newTheme}`);
 		return;
@@ -28,8 +30,11 @@ export function setTheme(newTheme: Theme): void {
 		// Update DOM attribute immediately
 		document.documentElement.setAttribute('data-theme', newTheme);
 
-		// Save to localStorage
-		localStorage.setItem(THEME_COOKIE_NAME, newTheme);
+		try {
+			await storage.set(THEME_COOKIE_NAME, newTheme);
+		} catch (error) {
+			console.error('Failed to persist theme:', error);
+		}
 
 		// Save to cookie with 1 year expiration
 		const oneYear = THEME_COOKIE_MAX_AGE;
@@ -37,12 +42,12 @@ export function setTheme(newTheme: Theme): void {
 	}
 }
 
-export function initializeTheme(): void {
+export async function initializeTheme(): Promise<void> {
 	if (!browser) return;
 
 	try {
-		// Priority: localStorage → data-theme attribute → default
-		const stored = localStorage.getItem(THEME_COOKIE_NAME);
+		// Priority: storage → data-theme attribute → default
+		const stored = await storage.get(THEME_COOKIE_NAME);
 		if (stored && isValidTheme(stored)) {
 			currentTheme = stored;
 			return;
@@ -58,5 +63,7 @@ export function initializeTheme(): void {
 	} catch (error) {
 		console.error('Error initializing theme:', error);
 		currentTheme = DEFAULT_THEME;
+	} finally {
+		document.documentElement.setAttribute('data-theme', currentTheme);
 	}
 }

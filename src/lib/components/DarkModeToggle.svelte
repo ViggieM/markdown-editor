@@ -5,8 +5,8 @@
 
 	let isDark = $derived(getTheme() === 'dark');
 
-	function toggleTheme() {
-		setTheme(isDark ? 'light' : 'dark');
+	async function toggleTheme() {
+		await setTheme(isDark ? 'light' : 'dark');
 	}
 </script>
 

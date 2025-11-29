@@ -220,6 +220,7 @@
 	}
 
 	th {
+		@apply text-gray-300;
 		background-color: var(--color-gray-800);
 		font-weight: var(--font-weight-medium);
 	}
