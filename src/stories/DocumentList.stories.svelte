@@ -48,7 +48,7 @@
 		},
 		argTypes: {
 			files: { control: 'object' },
-			selectedId: { control: 'text' },
+			selectedIdx: { control: 'number' },
 			onFileSelect: { action: 'file-selected' }
 		},
 		args: {
@@ -62,7 +62,7 @@
 
 <Story name="Empty" args={{ files: [] }} />
 
-<Story name="WithSelection" args={{ files: exampleFiles, selectedId: 'untitled-document.md' }} />
+<Story name="WithSelection" args={{ files: exampleFiles, selectedIdx: 1 }} />
 
 <Story name="ManyDocuments" args={{ files: manyFiles }} />
 

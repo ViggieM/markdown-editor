@@ -40,10 +40,8 @@
 </button>
 
 <style>
-	@reference '../../styles/global.css';
-
 	.hamburger-button {
-		@apply p-4 py-5 md:py-6 md:px-5;
+		padding: 1.25rem 1rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -52,6 +50,12 @@
 		cursor: pointer;
 		transition: background-color 0.2s ease;
 		position: relative;
+	}
+
+	@media (min-width: 768px) {
+		.hamburger-button {
+			padding: 1.5rem 1.25rem;
+		}
 	}
 
 	.hamburger-button:hover {
@@ -65,21 +69,36 @@
 
 	/* Icon container */
 	.hamburger-button__icon {
-		@apply h-[16px] w-[24px] md:h-[20px] md:w-[32px];
+		height: 16px;
+		width: 24px;
 		display: flex;
 		flex-direction: column;
 		gap: 4px;
 		position: relative;
 	}
 
+	@media (min-width: 768px) {
+		.hamburger-button__icon {
+			height: 20px;
+			width: 32px;
+		}
+	}
+
 	/* Individual bars */
 	.hamburger-button__bar {
-		@apply h-[2px] w-[23px] md:w-[30px];
+		height: 2px;
+		width: 23px;
 		background: white;
 		transition: all 0.3s ease;
 		transform-origin: center;
 		position: absolute;
 		left: 0;
+	}
+
+	@media (min-width: 768px) {
+		.hamburger-button__bar {
+			width: 30px;
+		}
 	}
 
 	.hamburger-button__bar:nth-child(1) {
