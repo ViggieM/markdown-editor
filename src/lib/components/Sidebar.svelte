@@ -7,9 +7,10 @@
 		isMenuOpen: boolean;
 		onNewDocument?: () => void;
 		onFileSelect?: (file: File) => void;
+		onDocumentSelect?: () => void;
 	}
 
-	let { isMenuOpen = $bindable(), onNewDocument, onFileSelect }: Props = $props();
+	let { isMenuOpen = $bindable(), onNewDocument, onFileSelect, onDocumentSelect }: Props = $props();
 </script>
 
 <aside class="sidebar" class:sidebar--open={isMenuOpen}>
@@ -22,7 +23,7 @@
 					+ New Document
 				</button>
 			{:else}
-				<button class="btn btn-primary w-full mt-4" onclick={() => fileStore.loadFiles()}>
+				<button class="btn btn-primary w-full mt-4" onclick={onDocumentSelect}>
 					Select Directory
 				</button>
 			{/if}

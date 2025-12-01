@@ -43,10 +43,28 @@
 		fileStore.select(null);
 		documentName = fileContent = initialContent = '';
 	}
+
+	function onDocumentSelect() {
+		if ('showDirectoryPicker' in window) {
+			fileStore.loadFiles();
+		} else {
+			const browserName = navigator.userAgent.includes('Firefox')
+				? 'Firefox'
+				: navigator.userAgent.includes('Safari')
+					? 'Safari'
+					: 'your browser';
+
+			alert(
+				`Unfortunately, ${browserName} doesn't support direct file system access.\n\nPlease use Chrome or Edge for the full experience.`
+			);
+		}
+	}
 </script>
 
 <div class="markdown-editor" style="--sidebar-width: {sidebarWidth}">
-	<div><Sidebar bind:isMenuOpen {onFileSelect} {onNewDocument} /></div>
+	<div>
+		<Sidebar bind:isMenuOpen {onFileSelect} {onNewDocument} {onDocumentSelect} />
+	</div>
 	<div class="content">
 		<Header bind:isMenuOpen bind:documentName {isSaveDisabled} {onSave} {onDelete}></Header>
 		<Editor bind:markdown={fileContent}></Editor>
