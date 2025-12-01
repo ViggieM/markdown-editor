@@ -52,10 +52,12 @@
 			<div class="header-divider"></div>
 			<div class="header-doc-info">
 				<span class="header-doc-label">Document Name</span>
-				<div class="header-doc-name">
-					<img src={FileIcon} alt="" />
-					<input class="header-doc-name-input" type="text" bind:value={documentName} />
-				</div>
+				<form onsubmit={onSave}>
+					<div class="header-doc-name">
+						<img src={FileIcon} alt="" />
+						<input class="header-doc-name-input" type="text" bind:value={documentName} />
+					</div>
+				</form>
 			</div>
 		{/if}
 	</div>
@@ -80,8 +82,8 @@
 		<h4>Delete this document?</h4>
 	{/snippet}
 	<p>
-		Are you sure you want to delete the {documentName} document and its contents? This action cannot
-		be reversed
+		Are you sure you want to delete the {documentName} document and its contents? This action cannot be
+		reversed
 	</p>
 	{#snippet actions()}
 		<Button class="w-full" onclick={handleConfirmDelete}>Confirm & Delete</Button>

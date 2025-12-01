@@ -20,6 +20,7 @@
 				class:document-list__button--selected={idx === selectedIdx}
 				onclick={() => onFileSelect?.(file)}
 				type="button"
+				title={file.name}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html FileIcon}
