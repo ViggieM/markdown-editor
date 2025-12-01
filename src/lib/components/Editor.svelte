@@ -35,7 +35,12 @@
 					{@html showMarkdown ? eyeIcon : eyeOffIcon}
 				</button>
 			</div>
-			<textarea class="editor__textarea" bind:value={markdown} placeholder="Enter markdown here..."
+			<textarea
+				class="editor__textarea"
+				bind:value={markdown}
+				placeholder="Enter markdown here..."
+				name="editor"
+				id="editor"
 			></textarea>
 		</div>
 	{/if}

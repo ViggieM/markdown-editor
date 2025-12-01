@@ -20,26 +20,29 @@
 	);
 
 	async function onFileSelect(file: FileWithHandle) {
-		console.log('selectedFileIdx', fileStore.selectedFileIdx);
 		fileStore.select(file);
 		selectedFile = file;
 		documentName = selectedFile?.name || '';
 		fileContent = initialContent = await fileStore.readFile(file);
 	}
 
-	function onSave() {
+	async function onSave() {
 		if (!selectedFile || !selectedFile.handle) return;
-		fileStore.save(selectedFile, documentName, fileContent);
+		await fileStore.save(selectedFile, documentName, fileContent);
+		initialContent = fileContent;
 	}
 
-	function onNewDocument() {
-		fileStore.createNewFile();
+	async function onNewDocument() {
+		await fileStore.createNewFile();
 		selectedFile = fileStore.markdownFiles[fileStore.selectedFileIdx];
+		documentName = selectedFile.name || '';
+		fileContent = initialContent = '';
+		document.getElementById('editor')?.focus();
 	}
 
-	function onDelete() {
+	async function onDelete() {
 		if (!selectedFile) return;
-		fileStore.deleteFile(selectedFile);
+		await fileStore.deleteFile(selectedFile);
 		fileStore.select(null);
 		documentName = fileContent = initialContent = '';
 	}

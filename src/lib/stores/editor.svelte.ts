@@ -68,7 +68,22 @@ class Editor {
 	async createNewFile() {
 		if (!this.directoryHandle) return;
 
-		const newFileHandle = await this.directoryHandle.getFileHandle('Untitled.md', { create: true });
+		const fileNames = this.markdownFiles.map((file) => file.name);
+		let newFileName = 'Untitled';
+		let i = 0;
+		while (true) {
+			if (fileNames.includes(`Untitled${i === 0 ? '' : String(i)}.md`)) {
+				i += 1;
+				continue;
+			} else {
+				newFileName = `Untitled${i === 0 ? '' : String(i)}`;
+				break;
+			}
+		}
+
+		const newFileHandle = await this.directoryHandle.getFileHandle(`${newFileName}.md`, {
+			create: true
+		});
 		const newFile = await newFileHandle.getFile();
 		const fileWithHandle = Object.assign(newFile, { handle: newFileHandle });
 		this.markdownFiles.push(fileWithHandle);
