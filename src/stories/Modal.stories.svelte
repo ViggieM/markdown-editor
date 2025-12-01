@@ -16,7 +16,7 @@
 	});
 </script>
 
-<Story name="Basic" args={{ simpleChild: true }}>
+<Story name="Basic" args={{ simpleChild: true, size: 'medium' }}>
 	{#snippet template(args)}
 		<ModalExample {...args}>
 			<p>This is just a modal without a header and title</p>
@@ -25,7 +25,7 @@
 </Story>
 
 <Story name="With Title" asChild>
-	<ModalExample>
+	<ModalExample size="medium">
 		{#snippet title()}
 			<h2 style="margin: 0;">Modal Title</h2>
 		{/snippet}
@@ -34,7 +34,7 @@
 </Story>
 
 <Story name="With Actions" asChild>
-	<ModalExample>
+	<ModalExample size="medium">
 		{#snippet title()}
 			<h2 style="margin: 0;">Modal Title</h2>
 		{/snippet}

@@ -9,6 +9,4 @@
 
 <Button onclick={() => (open = true)}>Open Modal</Button>
 
-<Modal {open} onclose={() => (open = false)} {title} {actions} {size}>
-	{@render children()}
-</Modal>
+<Modal {open} onclose={() => (open = false)} {title} {actions} {size} {children}></Modal>
