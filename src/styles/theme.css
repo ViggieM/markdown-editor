@@ -30,6 +30,12 @@
 	--color-orange: #e46643;
 	--color-orange-hover: #f39765;
 
+	/* Status colors */
+	--color-green: #10b981;
+	--color-green-dark: #059669;
+	--color-red: #ef4444;
+	--color-red-dark: #dc2626;
+
 	/* ===== Typography ===== */
 	/* Font families */
 	--font-slab: 'Roboto Slab', serif;

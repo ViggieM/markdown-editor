@@ -2,6 +2,7 @@
 	import '../styles/global.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { initializeTheme } from '$lib/stores/theme.svelte';
+	import Toaster from '$lib/components/Toaster.svelte';
 
 	let { children } = $props();
 
@@ -17,3 +18,4 @@
 </svelte:head>
 
 {@render children()}
+<Toaster />

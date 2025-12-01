@@ -4,6 +4,7 @@
 	import Editor from '$lib/components/Editor.svelte';
 	import { fileStore } from '$lib/stores/editor.svelte';
 	import type { FileWithHandle } from 'browser-fs-access';
+	import { toastSuccess, toastInfo } from '$lib/stores/notifications.svelte';
 
 	let isMenuOpen = $state(true);
 	let sidebarWidth = $derived(isMenuOpen ? '250px' : '0px');
@@ -30,6 +31,7 @@
 		if (!selectedFile || !selectedFile.handle) return;
 		await fileStore.save(selectedFile, documentName, fileContent);
 		initialContent = fileContent;
+		toastSuccess('Changes have been saved');
 	}
 
 	async function onNewDocument() {
@@ -44,6 +46,7 @@
 		if (!selectedFile) return;
 		await fileStore.deleteFile(selectedFile);
 		fileStore.select(null);
+		toastInfo(`${documentName} has been deleted`);
 		documentName = fileContent = initialContent = '';
 	}
 

@@ -23,7 +23,7 @@
 					+ New Document
 				</button>
 			{:else}
-				<button class="btn btn-primary w-full mt-4" onclick={onDocumentSelect}>
+				<button class="btn btn-primary w-full mt-4" onclick={onDocumentSelect} type="button">
 					Select Directory
 				</button>
 			{/if}
